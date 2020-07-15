@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "459985842085",
+    "firebase_url": "https://wife-material.firebaseio.com",
+    "project_id": "wife-material",
+    "storage_bucket": "wife-material.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459985842085:android:6f8319ffaec6d3202b424c",
+        "android_client_info": {
+          "package_name": "com.oneblock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459985842085-ue45htam52og8rbfs0mg7423e01hk499.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7jh_szd1xwsTbYzRZPBxqdaBYhjHwGbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459985842085-ue45htam52og8rbfs0mg7423e01hk499.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
