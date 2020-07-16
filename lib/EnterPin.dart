@@ -156,7 +156,12 @@ Wrap(crossAxisAlignment: WrapCrossAlignment.center,alignment: WrapAlignment.cent
         }
         setState(() {});
         if(pins.length==4){
-          Future.delayed(Duration(milliseconds: 300),()async{
+          StringBuffer pinBuilder = StringBuffer();
+          for(String s in pins){
+            pinBuilder.write(s);
+          }
+          Navigator.pop(context,pinBuilder.toString());
+         /* Future.delayed(Duration(milliseconds: 300),()async{
             SharedPreferences shed = await SharedPreferences.getInstance();
             String myPin = shed.getString(PIN)??"";
             StringBuffer pinBuilder = StringBuffer();
@@ -171,7 +176,7 @@ Wrap(crossAxisAlignment: WrapCrossAlignment.center,alignment: WrapAlignment.cent
             }else{
               Navigator.pop(context,pinBuilder.toString());
             }
-          });
+          });*/
         }
       },elevation: 1,
         color: app_red,shape: CircleBorder(),

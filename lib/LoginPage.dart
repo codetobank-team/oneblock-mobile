@@ -164,14 +164,14 @@ class _LoginPageState extends State<LoginPage> {
                   addSpace(30),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: new TextField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       focusNode: focusEmail,
                       decoration: InputDecoration(
                         isDense: true,
@@ -205,14 +205,14 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     // padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(25))),
                     child: new TextField(
                       controller: passwordController,
                       keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       focusNode: focusPassword,
                       decoration: InputDecoration(
 //                          hintText: "Password",

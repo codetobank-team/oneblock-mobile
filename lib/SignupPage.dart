@@ -145,7 +145,7 @@ class _SignupPageState extends State<SignupPage> {
                   addSpace(20),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -188,7 +188,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -231,7 +231,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -271,7 +271,7 @@ class _SignupPageState extends State<SignupPage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     // padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -324,7 +324,7 @@ class _SignupPageState extends State<SignupPage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     // padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(25))),

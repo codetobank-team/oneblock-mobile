@@ -451,29 +451,43 @@ emptyLayout(icon, String title, String text, {click, clickText}) {
               ),
             ),
             addSpace(10),
-            Text(
-              title,
-              style: textStyle(true, 16, black),
-              textAlign: TextAlign.center,
+            Row(mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: textStyle(true, 16, black),
+                  textAlign: TextAlign.center,
+                ),
+//                if(click!=null)GestureDetector(
+//                  onTap: (){
+//                    click();
+//                  },
+//                  child: Container(
+//                      padding: EdgeInsets.all(5),
+//                      decoration: BoxDecoration(color: red6,shape: BoxShape.circle)
+//                      ,child: Icon(Icons.refresh,color: white,size: 14,)),
+//                )
+              ],
             ),
-            addSpace(5),
-            Text(
+            if(text.isNotEmpty)addSpace(5),
+            if(text.isNotEmpty)Text(
               text,
               style: textStyle(false, 14, black.withOpacity(.5)),
               textAlign: TextAlign.center,
             ),
-            addSpace(10),
-            click == null
-                ? new Container()
-                : FlatButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    color: app_blue,
-                    onPressed: click,
-                    child: Text(
-                      clickText,
-                      style: textStyle(true, 14, white),
-                    ))
+            if(click!=null)addSpace(10),
+            if(click!=null)Container(height: 30,
+                  child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),side: BorderSide(width: 1,color:black.withOpacity(.1))),
+//                      color: default_white,
+                      onPressed: click,
+                      padding: EdgeInsets.fromLTRB(10,5,10,5),
+                      child: Text(
+                        clickText,
+                        style: textStyle(false, 14, black.withOpacity(.7)),
+                      )),
+                )
           ],
         ),
       ),
@@ -1372,9 +1386,10 @@ titleAndTextItem(String title, var text,
   );
 }
 
-String formatAmount(String text) {
-  if (text == null) return "";
-  if (text.isEmpty) return "";
+String formatAmount(var text) {
+  if (text == null) return "0.00";
+  text = text.toString();
+  if (text.isEmpty) return "0.00";
   text = text.replaceAll(",", "");
   try {
     text = double.parse(text).toStringAsFixed(2);

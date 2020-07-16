@@ -133,70 +133,57 @@ class _SendMoneyState extends State<SendMoney> {
                   addSpace(30),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Row(
-                      children: [
-                        Flexible(fit: FlexFit.tight,
-                          child: new TextField(
-                            controller: accountController,
+                    child: new TextField(
+                      controller: accountController,
 //                      keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            focusNode: focusAccount,
-                            decoration: InputDecoration(
-                              isDense: true,
+                      textInputAction: TextInputAction.done,
+                      focusNode: focusAccount,
+                      decoration: InputDecoration(
+                        isDense: true,
 //                        suffix: GestureDetector(
 //                          onTap: () {
 //                            pushAndResult(context,ScanBarCode());
 //                          },
 //                          child: Icon(Icons.settings_overscan)),
-                              labelStyle: textStyle(
-                                false,
-                                22,
-                                black.withOpacity(.35),
-                              ),
-                              labelText: "Receiver ID",
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  borderSide: BorderSide(color: red0, width: 2)),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  borderSide: BorderSide(
-                                      color: black.withOpacity(.1), width: 1)),
-                            ),
-                            style: textStyle(
-                              false,
-                              22,
-                              black,
-                            ),
-                            cursorColor: black,
-                            cursorWidth: 1,
-                            maxLines: 1,
-                          ),
+                        labelStyle: textStyle(
+                          false,
+                          22,
+                          black.withOpacity(.35),
                         ),
-//                        addSpaceWidth(10),
-//                        Container(width: 40,height: 40,
-//                          child: FlatButton(onPressed: (){
-//                            initCodeState();
-//                          },
-//                              padding: EdgeInsets.all(0),
-//                              child: Icon(Icons.settings_overscan,size: 18,)),)
-                      ],
+                        labelText: "Receiver ID",
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(color: red0, width: 2)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                                color: black.withOpacity(.1), width: 1)),
+                      ),
+                      style: textStyle(
+                        false,
+                        22,
+                        black,
+                      ),
+                      cursorColor: black,
+                      cursorWidth: 1,
+                      maxLines: 1,
                     ),
                   ),
                   addSpace(20),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: new TextField(
                       controller: amountController,
 //                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       focusNode: focusAmount,
                       decoration: InputDecoration(
                         isDense: true,
@@ -233,14 +220,14 @@ class _SendMoneyState extends State<SendMoney> {
                   addSpace(20),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    height: 50,
+//                    height: 50,
                     // decoration: BoxDecoration(
                     //     color: default_white,
                     //     borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: new TextField(
                       controller: refController,
 //                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       focusNode: focusRef,
                       decoration: InputDecoration(
                         isDense: true,
@@ -249,7 +236,7 @@ class _SendMoneyState extends State<SendMoney> {
                           22,
                           black.withOpacity(.35),
                         ),
-                        labelText: "Reference Note ${!refFocused?"(Optional)":""}",
+                        labelText: "Note ${!refFocused?"(Optional)":""}",
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(color: red0, width: 2)),
@@ -280,8 +267,7 @@ class _SendMoneyState extends State<SendMoney> {
                             borderRadius: BorderRadius.circular(5)),
                         color: app_red,
                         onPressed: () {
-//                          send();
-                        pushAndResult(context, EnterPin());
+                          send();
                         },
                         child: Text(
                           "Send",
@@ -315,7 +301,11 @@ class _SendMoneyState extends State<SendMoney> {
       return;
     }
 
-//    startSending();
+    pushAndResult(context, EnterPin(),result:(_){
+   Future.delayed(Duration(milliseconds: 400),(){
+     startSending(account,amount.toStringAsFixed(0),_);
+   });
+    });
   }
 
   String errorText = "";
@@ -328,7 +318,7 @@ class _SendMoneyState extends State<SendMoney> {
     });
   }
 
-  startLogin(String email, String password) async {
+  startSending(String recipient, String amount,String transactionPin) async {
     bool connected = await isConnected();
     if (!connected) {
       showError("No Internet Connectivity");
@@ -337,9 +327,10 @@ class _SendMoneyState extends State<SendMoney> {
 
     showProgress(true, context,);
 
+    print("Sending $amount");
     getApplicationsAPICall(
       context,
-      BASE_API + "auth/login",
+      BASE_API + "transactions/send",
       (response, error) async {
         showProgress(false, context);
         if (error != null) {
@@ -360,27 +351,17 @@ class _SendMoneyState extends State<SendMoney> {
           });
           return;
         }
-        // Api response: {"status":201,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-        // eyJpZCI6IjVmMGU1NTJlYjM0NmVmMDAxZWYzYzcxZSIsImlhdCI6MTU5NDc3NDgzMSwiZXhwIjo
-        // xNTk0Nzc2NjMxfQ.cHxLz58nyDxv-WR8bM78NDf0Ro23whq3uNaUcgwRHWE","
-        // data":{"id":"5f0e552eb346ef001ef3c71e",
-        // "firstName":"John","lastName":"John","email":"john@gmail.com"}}
 
-        var pref = await SharedPreferences.getInstance();
-        String json = jsonEncode(body);
-        Map map = jsonDecode(body);
-        pref.setString(USER_INFO, json);
-        pref.setString(USER_INFO_BACKUP, json);
-        pref.setString(EMAIL, email);
-        pref.setString(PASSWORD, password);
-        userInfo = map;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) {
-          return MainActivity();
-        }));
+        showMessage(context, Icons.check, blue0, "Successful", "Transfer of N$amount was successful",
+        onClicked: (_){
+          Navigator.pop(context,true);
+        });
+
       },
       post: {
-        'email': email,
-        'password': password,
+        'recipient': recipient,
+        'amount': amount,
+        'transactionPin': transactionPin,
       },
     );
   }
