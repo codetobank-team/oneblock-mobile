@@ -18,7 +18,7 @@ const String icon_file_zip = 'assets/icons/icon_file_zip.png';
 const String icon_file_xml = 'assets/icons/icon_file_xml.png';
 const String icon_file_audio = 'assets/icons/icon_file_audio.png';
 
-const String BASE_API = 'http://apioneblock.ddns.net/api/';
+const String BASE_API = 'http://oneblockdev.ddns.net/api/';
 const String EMAIL = 'email';
 const String PASSWORD = 'password';
 const String USER_INFO = 'userInfo';
