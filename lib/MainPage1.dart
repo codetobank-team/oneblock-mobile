@@ -85,7 +85,8 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
       }
       var body = jsonDecode(res.body);
       print("Trans $body");
-      transactions=body["data"];
+      List trans=body["data"];
+      transactions= List.from(trans.reversed);
       transLoading=false;
       if(mounted)setState(() {});
     },getMethod: true,

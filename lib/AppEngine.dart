@@ -1794,7 +1794,8 @@ void getApplicationsAPICall(
         body = jsonDecode(response.body);
         if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
-      if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
+      if (body != null && body.toString().contains(TOKEN_EXPIRED)
+         ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
@@ -1831,7 +1832,8 @@ void getApplicationsAPICall(
         body = jsonDecode(response.body);
         if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
-      if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
+      if (body != null && body.toString().contains(TOKEN_EXPIRED)
+          ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
@@ -1865,7 +1867,8 @@ void getApplicationsAPICall(
         body = jsonDecode(response.body);
         if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
-      if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
+      if (body != null && body.toString().contains(TOKEN_EXPIRED)
+          ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
@@ -1896,7 +1899,8 @@ void getApplicationsAPICall(
       print("Response body >>> ${response.body} <<<");
       var body = jsonDecode(response.body);
       if(body.toString().toLowerCase().contains("error"))error = body;
-      if (body.toString().contains(TOKEN_EXPIRED)) {
+      if (body.toString().contains(TOKEN_EXPIRED)
+          ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
@@ -1929,7 +1933,8 @@ void getApplicationsAPICall(
         body = jsonDecode(response.body);
         if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
-      if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
+      if (body != null && body.toString().contains(TOKEN_EXPIRED)
+          ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
@@ -2005,7 +2010,8 @@ void getApplicationsAPICallWithFile(
         body = jsonDecode(res.data);
 //        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
-      if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
+      if (body != null && body.toString().contains(TOKEN_EXPIRED)
+          ||body != null && body.toString().toLowerCase().contains("status: 401")) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
@@ -2084,7 +2090,7 @@ pickCountry(context, onPicked(Country country)) {
   });
 }
 
-checkResponse(context, String body) {
+/*checkResponse(context, String body) {
   if (body.toString().contains(TOKEN_EXPIRED)) {
     showMessage(context, Icons.error, red0, "Session Expired!",
         "Your session token has expired, login again.", cancellable: false,
@@ -2095,7 +2101,7 @@ checkResponse(context, String body) {
     });
     return;
   }
-}
+}*/
 
 List getListFromMap(String key, List list) {
   List items = [];
