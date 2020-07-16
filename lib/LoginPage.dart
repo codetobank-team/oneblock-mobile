@@ -267,7 +267,6 @@ class _LoginPageState extends State<LoginPage> {
                         color: app_red,
                         onPressed: () {
                           login();
-                        
                         },
                         child: Text(
                           "Login",
@@ -279,7 +278,12 @@ class _LoginPageState extends State<LoginPage> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-//                    biometrics();
+                        if (myPass==null) {
+                          showMessage(context, Icons.error, red0, "Login First",
+                              "You need to make an initial login, before you can use fingerprint");
+                          return;
+                        }
+
                         _authenticate();
                       },
                       child: Container(
@@ -321,7 +325,7 @@ class _LoginPageState extends State<LoginPage> {
                           recognizer: new TapGestureRecognizer()
                             ..onTap = () {
                               print("Tapped");
-                              pushAndResult(context,SignupPage());
+                              pushAndResult(context, SignupPage());
                             },
                         ),
                       ]),
@@ -375,11 +379,12 @@ class _LoginPageState extends State<LoginPage> {
 
     if (password.length < 6) {
       FocusScope.of(context).requestFocus(focusPassword);
-      showError(password.isEmpty?"Enter your password":"Password too short");
+      showError(
+          password.isEmpty ? "Enter your password" : "Password too short");
       return;
     }
 
-   startLogin(email, password);
+    startLogin(email, password);
   }
 
   String errorText = "";
@@ -439,13 +444,13 @@ class _LoginPageState extends State<LoginPage> {
         pref.setString(PASSWORD, password);
         userInfo = map;
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) {
-            return MainActivity();
-          }));
+          return MainActivity();
+        }));
       },
-      post: {'email': email, 
-             'password': password,
-          
-             },
+      post: {
+        'email': email,
+        'password': password,
+      },
     );
   }
 

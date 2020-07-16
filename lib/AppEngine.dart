@@ -257,18 +257,18 @@ loadingLayout({bool trans = false}) {
       children: <Widget>[
         Center(
           child: Opacity(
-            opacity: .3,
+            opacity: 1,
             child: Image.asset(
               ic_launcher,
-              width: 25,
-              height: 25,
+              width: 20,
+              height: 20,
             ),
           ),
         ),
         Center(
           child: CircularProgressIndicator(
             //value: 20,
-            valueColor: AlwaysStoppedAnimation<Color>(trans ? white : blue5),
+            valueColor: AlwaysStoppedAnimation<Color>(trans ? white : red0),
             strokeWidth: 2,
           ),
         ),
@@ -408,20 +408,20 @@ emptyLayout(icon, String title, String text, {click, clickText}) {
                     width: 50,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: app_blue, width: 2)),
+                        border: Border.all(color: app_red, width: 2)),
                   ),
                   new Center(
                       child: !(icon is String)
                           ? Icon(
                               icon,
                               size: 30,
-                              color: app_blue,
+                              color: app_red,
                             )
                           : Image.asset(
                               icon,
                               height: 30,
                               width: 30,
-                              color: app_blue,
+                              color: app_red,
                             )),
                   /*  new Container(
                     child: Column(
@@ -941,7 +941,7 @@ getTabs(int count, int cp) {
 
 imageHolder(double size, imageUrl,
     {double stroke = 0,
-    strokeColor = blue0,
+    strokeColor = app_red,
     bool local = false,
     iconHolder = Icons.person,
     double iconHolderSize = 14,
@@ -963,7 +963,7 @@ imageHolder(double size, imageUrl,
             shape: CircleBorder(),
             clipBehavior: Clip.antiAlias,
             color: strokeColor,
-            elevation: .5,
+            elevation: 5,
             child: Stack(
               children: <Widget>[
                 Center(
@@ -1474,7 +1474,6 @@ inputTextView(String title, controller,
                         : TextInputType.multiline,
                 inputFormatters: [],
                 scrollPadding: EdgeInsets.all(0),
-               
               ),
             ),
           ],
@@ -1778,16 +1777,20 @@ void getApplicationsAPICall(
       var body;
       try {
         body = jsonDecode(response.body);
+        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
       if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+            onComplete: (){
+              getApplicationsAPICall(context, url, onComplete);
+            });
           });
         });
-        onComplete(response, TOKEN_EXPIRED);
+//        onComplete(response, TOKEN_EXPIRED);
         return;
       }
       onComplete(response, error);
@@ -1811,16 +1814,20 @@ void getApplicationsAPICall(
       var body;
       try {
         body = jsonDecode(response.body);
+        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
       if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+                onComplete: (){
+                  getApplicationsAPICall(context, url, onComplete);
+                });
           });
         });
-        onComplete(response, TOKEN_EXPIRED);
+//        onComplete(response, TOKEN_EXPIRED);
         return;
       }
       onComplete(response, error);
@@ -1841,16 +1848,20 @@ void getApplicationsAPICall(
       var body;
       try {
         body = jsonDecode(response.body);
+        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
       if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+                onComplete: (){
+                  getApplicationsAPICall(context, url, onComplete);
+                });
           });
         });
-        onComplete(response, TOKEN_EXPIRED);
+//        onComplete(response, TOKEN_EXPIRED);
         return;
       }
       onComplete(response, error);
@@ -1869,14 +1880,18 @@ void getApplicationsAPICall(
     Future.delayed(Duration(milliseconds: 500), () {
       print("Response body >>> ${response.body} <<<");
       var body = jsonDecode(response.body);
+      if(body.toString().toLowerCase().contains("error"))error = body;
       if (body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+                onComplete: (){
+                  getApplicationsAPICall(context, url, onComplete);
+                });
           });
         });
-        onComplete(response, TOKEN_EXPIRED);
+//        onComplete(response, TOKEN_EXPIRED);
         return;
       }
       onComplete(response, error);
@@ -1897,16 +1912,20 @@ void getApplicationsAPICall(
       var body;
       try {
         body = jsonDecode(response.body);
+        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
       if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+                onComplete: (){
+                  getApplicationsAPICall(context, url, onComplete);
+                });
           });
         });
-        onComplete(response, TOKEN_EXPIRED);
+//        onComplete(response, TOKEN_EXPIRED);
         return;
       }
       onComplete(response, error);
@@ -1969,16 +1988,20 @@ void getApplicationsAPICallWithFile(
       var body;
       try {
         body = jsonDecode(res.data);
+//        if(body.toString().toLowerCase().contains("error"))error = body;
       } catch (e) {}
       if (body != null && body.toString().contains(TOKEN_EXPIRED)) {
         showMessage(context, Icons.error, red0, "Session Expired!",
             "Your session token has expired, login again.", cancellable: false,
             onClicked: (_) {
           Future.delayed(Duration(milliseconds: 500), () {
-            refreshLogin(context, showLoading: true);
+            refreshLogin(context, showLoading: true,
+                onComplete: (){
+                  getApplicationsAPICallWithFile(context, url, onComplete);
+                });
           });
         });
-        onComplete(res, TOKEN_EXPIRED);
+//        onComplete(res, TOKEN_EXPIRED);
         return;
       }
       onComplete(res, null);
@@ -2007,7 +2030,7 @@ refreshLogin(context, {bool showLoading = false, onComplete}) async {
   String email = pref.getString(EMAIL);
   String password = pref.getString(PASSWORD);
 
-  var url = 'https://api.officemate.ng/api/user/login';
+  var url = BASE_API + "auth/login";
   if (showLoading) showProgress(true, context, msg: "Refreshing Login");
   getApplicationsAPICall(
     context,
@@ -2019,13 +2042,11 @@ refreshLogin(context, {bool showLoading = false, onComplete}) async {
         //refreshLogin(context);
         return;
       }
-      int statusCode = response.statusCode;
       String body = response.body;
       print(body);
       Map responseBody = jsonDecode(body);
       print("Logged In: $responseBody");
-      String status = responseBody[STATUS];
-      if (status == SUCCESS) {
+      if (!body.toString().toLowerCase().contains("error")) {
         var pref = await SharedPreferences.getInstance();
         String json = jsonEncode(body);
         Map map = jsonDecode(body);
@@ -2084,3 +2105,16 @@ handleError(context, error) {
   showMessage(context, Icons.error, red0, "Error!", error.toString(),
       delayInMilli: 500);
 }
+
+String getFullName() {
+  if(userInfo==null)return "";
+  if(userInfo["data"]==null)return "";
+  return "${userInfo["data"]["firstName"]} ${userInfo["data"]["lastName"]}";
+}
+
+String getFirstName() {
+  if(userInfo==null)return "";
+  if(userInfo["data"]==null)return "";
+  return "${userInfo["data"]["firstName"]}";
+}
+

@@ -18,15 +18,17 @@ const String icon_file_zip = 'assets/icons/icon_file_zip.png';
 const String icon_file_xml = 'assets/icons/icon_file_xml.png';
 const String icon_file_audio = 'assets/icons/icon_file_audio.png';
 
-const String BASE_API = 'http://oneblock.ddns.net/api/';
+const String BASE_API = 'http://oneblockdev.ddns.net/api/';
 const String EMAIL = 'email';
 const String PASSWORD = 'password';
 const String USER_INFO = 'userInfo';
 const String USER_INFO_BACKUP = 'userInfoBackup';
-const String TOKEN_EXPIRED = 'token_expired';
+const String TOKEN_EXPIRED = 'expired';
 const String TOKEN = 'token';
 const String SUCCESS = 'success';
 const String STATUS = 'status';
+const String PUSH_NOTIFICATION = 'pushNotification';
+const String PIN = 'PIN';
 
 
 const Color app_red = Color(0xffc41426);

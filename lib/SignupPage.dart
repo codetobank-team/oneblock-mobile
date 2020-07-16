@@ -499,7 +499,7 @@ class _SignupPageState extends State<SignupPage> {
       return;
     }
 
-    showProgress(true, context, msg: "Logging In");
+    showProgress(true, context, msg: "Creating Account");
 
     getApplicationsAPICall(
       context,
@@ -537,6 +537,7 @@ class _SignupPageState extends State<SignupPage> {
         pref.setString(USER_INFO_BACKUP, json);
         pref.setString(EMAIL, email);
         pref.setString(PASSWORD, password);
+        pref.setString(PIN, pin);
         userInfo = map;
         showMessage(context, Icons.check, blue0, "Successful",
             "Account created successfully",

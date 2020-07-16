@@ -9,6 +9,10 @@ import com.crazecoder.openfile.OpenFilePlugin;
 // import com.mr.flutter.plugin.filepicker.FilePickerPlugin;
 
 
+//import net.touchcapture.qr.flutterqr.FlutterQrPlugin;
+
+//import net.touchcapture.qr.flutterqr.FlutterQrPlugin;
+
 import io.flutter.embedding.android.FlutterFragmentActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugins.connectivity.ConnectivityPlugin;
@@ -17,6 +21,7 @@ import io.flutter.plugins.imagepicker.ImagePickerPlugin;
 import io.flutter.plugins.localauth.LocalAuthPlugin;
 import io.flutter.plugins.packageinfo.PackageInfoPlugin;
 import io.flutter.plugins.pathprovider.PathProviderPlugin;
+import io.flutter.plugins.share.SharePlugin;
 import io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin;
 import io.flutter.plugins.urllauncher.UrlLauncherPlugin;
 //import io.flutter.url_launcher_web.UrlLauncherWebPlugin;
@@ -39,6 +44,8 @@ public class MainActivity extends FlutterFragmentActivity {
     flutterEngine.getPlugins().add(new ImagePickerPlugin());
     flutterEngine.getPlugins().add(new ImageCropperPlugin());
     flutterEngine.getPlugins().add(new UrlLauncherPlugin());
+    flutterEngine.getPlugins().add(new SharePlugin());
+//    flutterEngine.getPlugins().add(new FlutterQrPlugin());
 //    flutterEngine.getPlugins().add(new UrlLauncherWebPlugin());
     flutterEngine.getPlugins().add(new PackageInfoPlugin());
 
