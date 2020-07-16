@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Oneblock/AppEngine.dart';
+import 'package:Oneblock/Details.dart';
 import 'package:Oneblock/ReceiveMoney.dart';
 import 'package:Oneblock/SendMoney.dart';
 import 'package:Oneblock/assets.dart';
@@ -41,7 +42,7 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
                 });
               }
             },clickYesText: "Retry");
-        return;
+//        return;
       }
       var body = jsonDecode(res.body);
       print(body);
@@ -60,7 +61,7 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
       transLoading = true;
       setState(() {});
     }
-    String url= BASE_API + "transactions/${userInfo["data"]["id"]}";
+    String url= BASE_API + "transactions";
     print("Loading Transactions from $url");
     getApplicationsAPICall(context, url, (res,error){
       if(error!=null){
@@ -84,6 +85,7 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
       }
       var body = jsonDecode(res.body);
       print("Trans $body");
+      transactions=body["data"];
       transLoading=false;
       if(mounted)setState(() {});
     },getMethod: true,
@@ -203,6 +205,7 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
                     onPressed: () {
                       pushAndResult(context, SendMoney(),result: (_){
                         refreshingBalance=true;
+                        transLoading=true;
                         setState(() {
 
                         });
@@ -282,9 +285,9 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
                          loadTrans();
                        },
                        child: Container(
-                           padding: EdgeInsets.all(5),
-                           decoration: BoxDecoration(color: red6,shape: BoxShape.circle)
-                           ,child: Icon(Icons.refresh,color: white,size: 14,)),
+//                           padding: EdgeInsets.all(5),
+//                           decoration: BoxDecoration(color: red6,shape: BoxShape.circle),
+                           child: Icon(Icons.refresh,color: black.withOpacity(.5),size: 18,)),
                      )
                    ],
                  ),
@@ -309,53 +312,88 @@ class _MainPage1State extends State<MainPage1> with AutomaticKeepAliveClientMixi
   }
 
   transItem(int p) {
-    bool incoming = p.isEven;
-    String address = "hjaifnsifisjefilesfiefl";
+    /*
+    * {status: completed, blockchainTimestamp: 1594880277637,
+    * sender: 0x7fff8d4A4ec32BEbFf43B9316d4BE8369d805858,
+    * recipient: 0x663Ff687C051f12516337f38004F11dBd08D5f93,
+    * hash: 56ce6e75e3ed7a4fe569fa6b3661a9b80a856bd4b4d9f8b775265e9cdb7427b7,
+    * amount: 400, createdAt: 2020-07-16T06:17:57.643Z,
+    * updatedAt: 2020-07-16T06:17:57.643Z, id: 5f0ff115ae1752001d99ce8d, type: sent}*/
+    Map item = transactions[p];
+    bool incoming = item["type"]!="sent";
+    String recipient = item["recipient"]??"";
+    String sender = item["sender"]??"";
+    String amount = formatAmount(item["amount"]);
+    int time = item["blockchainTimestamp"];
     var color = incoming ? blue0 : black.withOpacity(.5);
-    return Column(
-      children: [
-        Container(
-          height: 70,
-          child: Row(
-            children: [
-              Icon(
-                incoming ? Icons.arrow_downward : Icons.arrow_upward,size: 17,
-                color: color,
-              ),
-              addSpaceWidth(10),
-              Flexible(
-                fit: FlexFit.tight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      incoming ? "Received" : "Sent",
-                      style: textStyle(false, 16, black),
+    return GestureDetector(
+      onTap: (){
+        pushAndResult(context, Details(item));
+      },
+      child: Container(color: transparent,
+        child: Column(
+          children: [
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Container(width: 20,height: 20,
+                    decoration: BoxDecoration(
+                      color: color,
+//                  border: Border.all(color:color,width: 1),
+                        shape: BoxShape.circle
                     ),
-                    Text(
-                      "${incoming ? "From:" : "To:"} $address",
-                      style: textStyle(false, 14, black.withOpacity(.4)),
+                    child: Icon(
+                      incoming ? Icons.arrow_downward : Icons.arrow_upward,size: 14,
+                      color: white,
                     ),
-                  ],
-                ),
+                  ),
+                  addSpaceWidth(10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          incoming ? "Received" : "Sent",
+                          style: textStyle(false, 16, black),
+                        ),
+                        Row(
+                          children: [
+                            Text("${incoming ? "From:" : "To:"}",style: textStyle(true, 12, color),),
+                            addSpaceWidth(5),
+                            Flexible(
+                              child: Text(
+                                "${incoming?sender:recipient}",
+                                style: textStyle(false, 14, black.withOpacity(.4)),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Image.asset(
+                    naira,
+                    width: 12,
+                    height: 12,
+                    color: color,
+                  ),
+                  addSpace(5),
+                  Text(
+                    amount,
+                    style: textStyle(true, 17, color),
+                  )
+                ],
               ),
-              Image.asset(
-                naira,
-                width: 12,
-                height: 12,
-                color: color,
-              ),
-              addSpace(5),
-              Text(
-                "30,000",
-                style: textStyle(true, 17, color),
-              )
-            ],
-          ),
+            ),
+            addLine(.5, black.withOpacity(.1), 0, 0, 0, 0)
+          ],
         ),
-        addLine(.5, black.withOpacity(.1), 0, 0, 0, 0)
-      ],
+      ),
     );
   }
 
