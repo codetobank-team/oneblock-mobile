@@ -505,8 +505,9 @@ class _SignupPageState extends State<SignupPage> {
       context,
       BASE_API + "auth/register",
       (response, error) async {
-        showProgress(false, context);
+
         if (error != null) {
+          showProgress(false, context);
           Future.delayed(Duration(milliseconds: 500), () {
             showMessage(
                 context, Icons.error, red0, "Error occurred", error.toString());
@@ -518,6 +519,7 @@ class _SignupPageState extends State<SignupPage> {
         String body = response.body;
         Map responseBody = jsonDecode(body);
         if (body.toString().contains("error")) {
+          showProgress(false, context);
           Future.delayed(Duration(milliseconds: 500), () {
             showMessage(context, Icons.error, red0, "Error occurred",
                 "${responseBody["error"]}");
@@ -539,6 +541,9 @@ class _SignupPageState extends State<SignupPage> {
         pref.setString(PASSWORD, password);
         pref.setString(PIN, pin);
         userInfo = map;
+
+        await Future.delayed(Duration(seconds:5));
+        showProgress(false, context);
         showMessage(context, Icons.check, blue0, "Successful",
             "Account created successfully",
             cancellable: false, onClicked: (_) {
